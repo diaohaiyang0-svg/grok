@@ -1,12 +1,15 @@
-# TDX daily bars
+# TDX bars
 
-`513130_daily.csv` 与 `by_year/513130_YYYY.csv` 是上海 513130 不复权日线。
+上海 513130 不复权 K 线，客户端与 a-share-radar 相同（pytdxdata）。
 
-- provider: Tongdaxin
-- client: pytdxdata（与 a-share-radar 相同）
+- `513130_daily.csv` / `by_year/513130_YYYY.csv`：日线，2021-06-01 → 2026-09-22，1291 根
+- `513130_60m.csv`：60 分钟，2024-09-02 10:30 → 2026-09-22 15:00，1996 根
 - adjustment: NONE
-- 1291 bars, 2021-06-01 → 2026-09-22, last close 0.549
+- last close: 0.549
+
+通达信在线 60 分钟查 2021-06-01 至 2024-08-31 为空，服务器深度大约两年。
 
 ```bash
 python scripts/fetch_513130_tdx.py
+python scripts/fetch_513130_tdx_60m.py
 ```
