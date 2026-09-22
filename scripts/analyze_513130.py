@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Analyze 513130 with the workspace Chanlun engine.
 
-Prefers local TDX daily CSV, then year shards, then akshare.
+Only Tongdaxin unadjusted bars. No East Money / akshare fallback.
 """
 
 from __future__ import annotations
@@ -35,21 +35,10 @@ def load_daily() -> tuple[pd.DataFrame, str]:
     if parts:
         raw = pd.concat((pd.read_csv(p) for p in parts), ignore_index=True)
         return _to_ohlc(raw), f"TDX year shards {YEAR_DIR}"
-    import akshare as ak
-
-    raw = ak.fund_etf_hist_em(symbol=CODE, period="daily", adjust="qfq")
-    raw = raw.rename(
-        columns={
-            "日期": "time",
-            "开盘": "open",
-            "收盘": "close",
-            "最高": "high",
-            "最低": "low",
-        }
+    raise SystemExit(
+        "missing TDX daily bars; run scripts/fetch_513130_tdx.py "
+        "(East Money / akshare is not used)"
     )
-    df = raw[["time", "open", "high", "low", "close"]].copy()
-    df["time"] = pd.to_datetime(df["time"]).dt.strftime("%Y-%m-%d")
-    return df, "akshare fallback"
 
 
 def main() -> None:
