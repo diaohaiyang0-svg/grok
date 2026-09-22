@@ -26,8 +26,17 @@ python scripts/fetch_513130_tdx_60m.py
 ```bash
 python scripts/analyze_513130.py
 python scripts/analyze_513130_60m.py
-python scripts/backtest_leaves.py
+python scripts/backtest_leaves.py          # 官方分层离开回测（日线 + 60分钟）
+# python scripts/backtest_513130_60m.py    # 旧稿，只作对照
 ```
+
+回测口径（锁定，评分只用这一套）：
+
+- 窄中枢（宽度 ≤ 2 跳，或 < 形成笔均幅 10%）不进可评分样本
+- 离开 = 中枢走完后的下一笔，价格区间与 [ZD, ZG] 不再重叠
+- 可评分 = 整笔严格在中枢外（不是贴沿）且中枢不窄
+- 路径看到回抽进中枢或新中枢出现为止；+20 根收益只作附录
+- 走步：每根 K 只用当时数据，不以全样本事后中枢评分
 
 结果：
 
