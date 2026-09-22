@@ -1,0 +1,16 @@
+{
+  "symbol": "513130",
+  "name": "恒生科技ETF华泰柏瑞",
+  "exchange": "SH",
+  "provider": "TDX",
+  "client": "pytdxdata",
+  "adjustment": "NONE",
+  "bars": 1291,
+  "first_date": "2021-06-01",
+  "last_date": "2026-09-22",
+  "first_close": 1.019,
+  "last_close": 0.549,
+  "high": 1.03,
+  "low": 0.388,
+  "note": "Full daily CSV is written by scripts/fetch_513130_tdx.py to data/tdx/513130_daily.csv"
+}
