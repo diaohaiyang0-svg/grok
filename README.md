@@ -26,13 +26,14 @@ python scripts/fetch_513130_tdx_60m.py
 ```bash
 python scripts/analyze_513130.py
 python scripts/analyze_513130_60m.py
-python scripts/backtest_513130.py
+python scripts/backtest_513130_60m.py
 ```
 
 结果：
 
 - 日线：`results/513130_replay.md`、`results/513130_now.json`
-- 60 分钟：`results/513130_60m_replay.md`、`results/513130_60m_now.json`
+- 60 分钟结构：`results/513130_60m_replay.md`、`results/513130_60m_now.json`
+- 60 分钟回测：`results/513130_60m_backtest.md`、`results/513130_60m_backtest.json`
 
 锁定规则：K 线包含 → 分型 → 笔 → 中枢。日线和 60 分钟用同一套，不另做预测模型。
 
