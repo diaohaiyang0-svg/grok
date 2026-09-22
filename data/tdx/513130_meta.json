@@ -5,12 +5,19 @@
   "provider": "TDX",
   "client": "pytdxdata",
   "adjustment": "NONE",
+  "period": "day",
   "bars": 1291,
   "first_date": "2021-06-01",
   "last_date": "2026-09-22",
   "first_close": 1.019,
   "last_close": 0.549,
-  "high": 1.03,
-  "low": 0.388,
-  "note": "Full daily CSV is written by scripts/fetch_513130_tdx.py to data/tdx/513130_daily.csv"
+  "last_open": 0.551,
+  "last_high": 0.557,
+  "last_low": 0.547,
+  "last_volume": 4000065280.0,
+  "last_amount": 2208321280.0,
+  "high": 1.037,
+  "low": 0.386,
+  "fetched_at": "2026-09-22T13:20:07Z",
+  "note": "Unadjusted Shanghai ETF daily bars from Tongdaxin via pytdxdata.get_bars(sh513130, DAY, Adjust.NONE). Refresh with python scripts/fetch_513130_tdx.py"
 }
