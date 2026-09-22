@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """Analyze 513130 with the workspace Chanlun engine.
 
-Prefers local TDX daily CSV if present.
+Prefers local TDX daily CSV, then year shards, then akshare.
 """
 
 from __future__ import annotations
@@ -19,14 +19,22 @@ from chanlun.engine import analyze_ohlc
 CODE = "513130"
 NAME = "恒生科技ETF华泰柏瑞"
 TDX_CSV = ROOT / "data" / "tdx" / "513130_daily.csv"
+YEAR_DIR = ROOT / "data" / "tdx" / "by_year"
+
+
+def _to_ohlc(raw: pd.DataFrame) -> pd.DataFrame:
+    df = raw.rename(columns={"trade_date": "time"})[["time", "open", "high", "low", "close"]].copy()
+    df["time"] = pd.to_datetime(df["time"]).dt.strftime("%Y-%m-%d")
+    return df.drop_duplicates("time").sort_values("time").reset_index(drop=True)
 
 
 def load_daily() -> tuple[pd.DataFrame, str]:
     if TDX_CSV.exists():
-        raw = pd.read_csv(TDX_CSV)
-        df = raw.rename(columns={"trade_date": "time"})[["time", "open", "high", "low", "close"]].copy()
-        df["time"] = pd.to_datetime(df["time"]).dt.strftime("%Y-%m-%d")
-        return df, f"TDX {TDX_CSV}"
+        return _to_ohlc(pd.read_csv(TDX_CSV)), f"TDX {TDX_CSV}"
+    parts = sorted(YEAR_DIR.glob("513130_*.csv"))
+    if parts:
+        raw = pd.concat((pd.read_csv(p) for p in parts), ignore_index=True)
+        return _to_ohlc(raw), f"TDX year shards {YEAR_DIR}"
     import akshare as ak
 
     raw = ak.fund_etf_hist_em(symbol=CODE, period="daily", adjust="qfq")
