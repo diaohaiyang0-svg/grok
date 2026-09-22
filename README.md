@@ -2,36 +2,32 @@
 
 Grok 专用仓库。当前任务：用缠论梳理 513130（恒生科技ETF华泰柏瑞）的历史走势，再定位现阶段。
 
-## 为什么没有把 chanlun-pro 整仓拷进来
+数据已进仓库，回放不依赖本机通达信。
 
-选定的上游是 [yijixiuxin/chanlun-pro](https://github.com/yijixiuxin/chanlun-pro)（Apache-2.0 声明 + 本地部署付费/试用）。
+## 数据
 
-不能整包搬进 `grok` 的原因：
+- `data/tdx/513130_daily.csv`：通达信不复权日线（pytdxdata，与 a-share-radar 同一客户端）
+- `data/tdx/by_year/`：按年拆分，方便 git
+- 区间：2021-06-01 → 2026-09-22，1291 根，最新收盘 0.549
 
-- 仓库约 200MB，含 web、回测、多市场接口
-- `src/` 里有 PyArmor 加固运行时（`pyarmor_runtime_*`），不是可维护的明文算法
-- 作者要求本地部署授权，拷进公开仓库不合适
-
-本仓库放的是同一套结构口径的**明文实现**：K 线包含 → 分型 → 笔 → 中枢 → 当前位置。用于 513130 的历史校验与现阶段判断。
-
-若以后要完整 Web 看盘，在本机单独 clone 上游，不要合并进这个仓库。
-
-## 目录
-
-```
-chanlun/          #缠论核心
-scripts/          #513130 分析入口
-third_party/      #上游说明
-```
-
-## 跑 513130
+刷新（有网时）：
 
 ```bash
 pip install -r requirements.txt
-python scripts/analyze_513130.py
+python scripts/fetch_513130_tdx.py
 ```
 
-默认拉日线（成交价，不是净值），打印：
+## 回放
 
-1. 历史笔/中枢是否能对上主要高低点
-2. 当前一笔、最近中枢、是否在中枢内
+```bash
+python scripts/analyze_513130.py
+python scripts/backtest_513130.py
+```
+
+结果在 `results/513130_replay.md` 和 `results/513130_structure.json`。
+
+锁定规则：K 线包含 → 分型 → 笔 → 中枢。历史和现在用同一套，不另做预测模型。
+
+## 为什么没有把 chanlun-pro 整仓拷进来
+
+选定的上游是 [yijixiuxin/chanlun-pro](https://github.com/yijixiuxin/chanlun-pro)。不能整包搬进 `grok`：仓库大、`src/` 有 PyArmor 加固、作者要求本地部署授权。本仓库只放明文结构口径。
