@@ -1,13 +1,12 @@
 # grok
 
-Grok 专用仓库。513130（华泰柏瑞恒生科技 ETF）通达信不复权行情。
+513130（华泰柏瑞恒生科技 ETF）通达信不复权行情。
 
-当前回测：backtesting.py + 海龟 20/10 只做多 + 12 个月绝对动量。缠论与 Weinstein/Dow v1 已删。
+现行规则（已锁）：海龟 20/10 只做多。12 个月动量停用。
 
-```bash
-pip install -r requirements.txt
-python scripts/fetch_513130_tdx.py
-python scripts/run_513130_bt.py
-```
+- 进：收盘 > 此前 20 日最高，次日开盘买
+- 出：收盘 < 此前 10 日最低，或价 = 进场价 − 2×ATR20
+- 仓位：2×ATR 亏损 = 权益 0.5%
+- 成本：单边 0.08%
 
-规则与结果：`results/513130_rules_backtest.md`
+2026-09-23：收盘 0.543，20 日高 0.579，空仓。
