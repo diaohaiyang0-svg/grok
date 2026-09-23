@@ -6,21 +6,15 @@
   "client": "pytdxdata",
   "adjustment": "NONE",
   "period": "60m",
-  "bars": 1996,
-  "trading_days": 499,
+  "bars": 1998,
   "first_time": "2024-09-02 10:30:00",
-  "last_time": "2026-09-22 15:00:00",
+  "last_time": "2026-09-23 13:00:00",
   "first_close": 0.467,
-  "last_close": 0.549,
+  "last_close": 0.543,
   "high": 0.878,
   "low": 0.455,
-  "session_stamps": [
-    "10:30",
-    "11:30",
-    "14:00",
-    "15:00"
-  ],
-  "fetched_at": "2026-09-22T14:11:55Z",
+  "session_stamps": ["10:30", "11:30", "14:00", "15:00"],
+  "fetched_at": "2026-09-23T04:15:00Z",
   "coverage_note": "TDX online 60-minute history for this ETF starts 2024-09-02. Requests for 2021-06-01..2024-08-31 return empty. This is server depth, not a script trim.",
   "note": "Unadjusted Shanghai ETF 60-minute bars via pytdxdata.get_bars(sh513130, MIN_60, Adjust.NONE)"
 }
